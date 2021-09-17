@@ -65,8 +65,8 @@ print("autotrade start")
 
 while True:
     now = datetime.datetime.now()
-    start_time = get_start_time("KRW-BTC") + datetime.timedelta(seconds=40)
-    end_time = start_time + datetime.timedelta(seconds=40)
+    start_time = get_start_time("KRW-BTC") + datetime.timedelta(seconds=30)
+    end_time = start_time + datetime.timedelta(seconds=90)
     tickers = ("KRW-ETH", "KRW-ADA", "KRW-BTC", "KRW-XRP", "KRW-DOT", "KRW-LINK", "KRW-CRO", "KRW-HBAR", "KRW-BTT", "KRW-THETA", "KRW-ONT", "KRW-ANKR")
     try:
         for ticker in tickers:
@@ -90,25 +90,25 @@ while True:
                         upbit.sell_market_order(ticker, ticker_balance)
                         print("Sell complete:", ticker, ticker_balance)   
                 print("checked ma5:", ticker, ticker_balance)
-                time.sleep(0.3)
+                time.sleep(0.2)
 
             elif end_time < now and ticker_balance > 0.001:
                     print(now, "monitoring overshoot & drop:", ticker, ticker_balance)
                     if current_price > buyprice*1.25:
-                        if ticker_balance > 0.001:
+                        if ticker_balance*current_price > 450000:
                             upbit.sell_market_order(ticker, ticker_balance*0.5)
                             print("Sell complete by overshoot:", ticker, ticker_balance*0.5) 
                 
                 
                     elif current_price < buyprice*0.9:
-                        if ticker_balance > 0.001:
+                        if ticker_balance*current_price > 450000:
                             upbit.sell_market_order(ticker, ticker_balance*0.5)
                             print("Sell complete by drop:", ticker, ticker_balance*0.5)
                     print("checked overshoot&drop:", ticker, ticker_balance)
-                    time.sleep(0.3)
+                    time.sleep(0.2)
             else:
-                print(now, "this is not trade time")
-                time.sleep(0.3)
+                print(now, buyprice, current_price, "this is not trade time")
+                time.sleep(0.2)
     except Exception as e:
         print(e)
         time.sleep(1)
