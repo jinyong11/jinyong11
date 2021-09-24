@@ -88,10 +88,8 @@ while True:
                         print("Buy complete:", ticker, krw*0.2)
                     else : 
                         print("already have one or not enought money")
-
                 elif buyprice > ma5 and ma5 < ma10:
                     print("ma5 is lower than ma10")
-
                 else:
                     if ticker_balance > 0.001:
                         upbit.sell_market_order(ticker, ticker_balance)
@@ -105,8 +103,6 @@ while True:
                         if ticker_balance*current_price > 450000:
                             upbit.sell_market_order(ticker, ticker_balance*0.5)
                             print("Sell complete by overshoot:", ticker, ticker_balance*0.5) 
-                
-                
                     elif current_price < buyprice*0.9:
                         if ticker_balance*current_price > 450000:
                             upbit.sell_market_order(ticker, ticker_balance*0.5)
